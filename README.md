@@ -5,20 +5,36 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version: 3.0.3
 
-* System dependencies
+* Rails version: 7.0.4
 
-* Configuration
+* Dependencies used
+
+  ```gem 'devise'```
+  
+  ```gem 'devise-jwt```
+
+* Procedure:
+
+  Generate devise model by running
+   ```rails g devise user``` with all the basic configurations.
+   
+  Generate the sessions and registrations controller with user scope
+   ```rails g devise:controller user -c sessions registrations```.
+ 
+* Using JTIMatcher for devise-jwt Revocation strategies
+
+  Adding ```include Devise::JWT::RevocationStrategies::JTIMatcher```.
+  
+  ```devise :database_authenticatable, :jwt_authenticatable, jwt_revocation_strategy: self```, and
+  
+  ```
+      def jwt_payload
+        super
+      end
+  ```
+   this code in user model
 
 * Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  Added new ```jti``` column in user table.
